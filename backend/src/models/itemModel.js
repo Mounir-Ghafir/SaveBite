@@ -28,13 +28,11 @@ const itemSchema = new mongoose.Schema(
       required: true,
       min: 0.01,
     },
-    // Stored as a plain "YYYY-MM-DD" string.
     expiry_date: {
       type: String,
       required: true,
       match: /^\d{4}-\d{2}-\d{2}$/,
     },
-    // Reference to the store (a user with role "store").
     store: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -47,7 +45,6 @@ const itemSchema = new mongoose.Schema(
   }
 );
 
-// Fast filtering/sorting by expiry for the consumer list.
 itemSchema.index({ expiry_date: 1 });
 
 const Item = mongoose.model('Item', itemSchema);

@@ -16,7 +16,6 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    // Hidden by default so it is never sent in a response.
     password_hash: {
       type: String,
       required: true,
