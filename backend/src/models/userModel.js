@@ -34,4 +34,16 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model('User', userSchema);
 
+export async function findByEmail(email) {
+  return User.findOne({ email }).select('+password_hash');
+}
+
+export async function findById(id) {
+  return User.findById(id);
+}
+
+export async function create(data) {
+  return User.create(data);
+}
+
 export default User;
