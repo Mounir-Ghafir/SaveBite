@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import './userModel.js';
 
 const itemSchema = new mongoose.Schema(
   {
@@ -48,5 +49,37 @@ const itemSchema = new mongoose.Schema(
 itemSchema.index({ expiry_date: 1 });
 
 const Item = mongoose.model('Item', itemSchema);
+
+export async function findAllActive(today) {
+  return Item.find({ expiry_date: { $gte: today } })
+    .populate('store', 'name')
+    .sort({ expiry_date: 1 })
+    .lean();
+}
+
+export async function findByStore(store_id) {
+  return Item.find({ store: store_id })
+    .populate('store', 'name')
+    .sort({ expiry_date: 1 })
+    .lean();
+}
+
+export async function findById(id) {
+  return Item.findById(id).populate('store', 'name').lean();
+}
+
+export async function create(data) {
+  return Item.create(data);
+}
+
+export async function update(id, data) {
+  return Item.findByIdAndUpdate(id, data, { returnDocument: 'after', runValidators: true })
+    .populate('store', 'name')
+    .lean();
+}
+
+export async function remove(id) {
+  return Item.findByIdAndDelete(id).lean();
+}
 
 export default Item;
