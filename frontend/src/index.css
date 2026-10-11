@@ -56,7 +56,28 @@ a:hover {
 
 .navbar-links {
   display: flex;
+  align-items: center;
   gap: 1rem;
+}
+
+.navbar-user {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.link-button {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  background: none;
+  color: var(--color-primary-dark);
+  text-decoration: underline;
 }
 
 .not-found {

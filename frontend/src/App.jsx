@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import Items from './pages/Items.jsx';
@@ -17,10 +18,38 @@ function App() {
           <Route path="/" element={<Navigate to="/items" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/items" element={<Items />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/items/new" element={<AddItem />} />
-          <Route path="/dashboard/items/:id/edit" element={<EditItem />} />
+          <Route
+            path="/items"
+            element={
+              <ProtectedRoute>
+                <Items />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute allowedRole="store">
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/items/new"
+            element={
+              <ProtectedRoute allowedRole="store">
+                <AddItem />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/items/:id/edit"
+            element={
+              <ProtectedRoute allowedRole="store">
+                <EditItem />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
