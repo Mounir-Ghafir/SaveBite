@@ -8,11 +8,28 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
+const configuredOrigins = (process.env.CLIENT_URL || '')
   .split(',')
-  .map((origin) => origin.trim());
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
-app.use(cors({ origin: allowedOrigins }));
+function isAllowedOrigin(origin) {
+  if (!origin) {
+    return true;
+  }
+  if (configuredOrigins.includes(origin)) {
+    return true;
+  }
+  return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+}
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      callback(null, isAllowedOrigin(origin));
+    },
+  })
+);
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
