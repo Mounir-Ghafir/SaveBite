@@ -12,6 +12,8 @@ function Dashboard() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [notice, setNotice] = useState(null);
+  const [deletingId, setDeletingId] = useState('');
 
   const loadItems = useCallback(async () => {
     setLoading(true);
@@ -31,6 +33,25 @@ function Dashboard() {
     loadItems();
   }, [loadItems]);
 
+  async function handleDelete(item) {
+    if (!window.confirm(`Delete "${item.name}"?`)) {
+      return;
+    }
+
+    setNotice(null);
+    setDeletingId(item._id);
+
+    try {
+      await api.delete(`/items/${item._id}`);
+      setItems((current) => current.filter((row) => row._id !== item._id));
+      setNotice({ type: 'success', text: 'Item deleted' });
+    } catch {
+      setNotice({ type: 'error', text: 'Could not delete the item.' });
+    } finally {
+      setDeletingId('');
+    }
+  }
+
   return (
     <section>
       <div className="page-header">
@@ -41,6 +62,12 @@ function Dashboard() {
       </div>
 
       {message && <p className="alert alert-success">{message}</p>}
+
+      {notice && (
+        <p className={`alert ${notice.type === 'error' ? 'alert-error' : 'alert-success'}`}>
+          {notice.text}
+        </p>
+      )}
 
       {loading && <Loader />}
 
@@ -73,6 +100,19 @@ function Dashboard() {
                   </p>
                 </div>
                 {expired && <span className="expired-badge">Expired</span>}
+                <div className="item-row-actions">
+                  <Link className="link-button" to={`/dashboard/items/${item._id}/edit`}>
+                    Edit
+                  </Link>
+                  <button
+                    type="button"
+                    className="link-button danger"
+                    onClick={() => handleDelete(item)}
+                    disabled={deletingId === item._id}
+                  >
+                    {deletingId === item._id ? 'Deleting…' : 'Delete'}
+                  </button>
+                </div>
               </li>
             );
           })}

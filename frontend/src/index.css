@@ -246,6 +246,26 @@ a:hover {
   font-size: 0.8rem;
 }
 
+.item-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.link-button.danger {
+  color: var(--color-danger);
+}
+
+.link-button.danger:hover {
+  color: #8e0000;
+}
+
+.link-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
 .form-page {
   max-width: 420px;
   margin: 0 auto;
