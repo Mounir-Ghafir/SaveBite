@@ -1,5 +1,12 @@
 export const CURRENCY = '';
 
+export function getToday() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
 export function getDaysLeft(expiry_date) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);

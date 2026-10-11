@@ -1,4 +1,13 @@
-function FormField({ label, name, type = 'text', value, onChange, error, children }) {
+function FormField({
+  label,
+  name,
+  type = 'text',
+  value,
+  onChange,
+  error,
+  children,
+  ...rest
+}) {
   return (
     <div className="form-field">
       <label htmlFor={name}>{label}</label>
@@ -9,6 +18,7 @@ function FormField({ label, name, type = 'text', value, onChange, error, childre
           type={type}
           value={value}
           onChange={onChange}
+          {...rest}
         />
       )}
       {error && <p className="field-error">{error}</p>}
