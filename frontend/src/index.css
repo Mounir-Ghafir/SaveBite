@@ -85,6 +85,90 @@ a:hover {
   padding: 3rem 1rem;
 }
 
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.item-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.item-card-urgent {
+  border-color: var(--color-danger);
+}
+
+.item-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.item-card-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.discount-badge {
+  padding: 0.15rem 0.5rem;
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.item-store {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.item-prices {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.old-price {
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+.new-price {
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.item-meta {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.days-left.urgent {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.loader {
+  color: var(--color-muted);
+}
+
 .form-page {
   max-width: 420px;
   margin: 0 auto;
